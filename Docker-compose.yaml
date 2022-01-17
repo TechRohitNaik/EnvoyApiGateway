@@ -1,0 +1,33 @@
+version: '3'
+services:
+  envoygateway:
+    build: Envoy/
+    image: techrohitnaik/envoyapidemo-envoygateway
+    ports:
+      - "9901:9901"
+      - "10000:10000"
+    volumes:
+      - ./Envoy/envoy.yaml:/etc/envoy/envoy.yaml
+  foodapi:
+    build: FoodApi/
+    image: techrohitnaik/envoyapidemo-foodapi
+    ports:
+      - "8080:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: "Development"
+    volumes:
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
+
+  breverageapi:
+    build: BreverageApi/
+    image: techrohitnaik/envoyapidemo-breverageapi
+    ports:
+      - "8082:80"
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: "Development"
+    volumes:
+      - ${APPDATA}\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/root/.aspnet/https/
