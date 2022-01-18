@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodapi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: foodapi-pod
+  template:
+    metadata:
+      labels:
+        app: foodapi-pod
+    spec:
+      containers:
+      - name: foodapi-container
+        image: techrohitnaik.azurecr.io/envoyapidemo-foodapi
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
